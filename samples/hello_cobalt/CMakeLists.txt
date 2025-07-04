@@ -1,0 +1,4 @@
+add_executable(hello_cobalt main.cpp)
+
+target_link_libraries(hello_cobalt PRIVATE cobalt_engine)
+target_compile_features(hello_cobalt PRIVATE cxx_std_23)

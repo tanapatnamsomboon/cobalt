@@ -1,0 +1,76 @@
+{
+  "version": 9,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 31
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+
+    {
+      "name": "msvc debug",
+      "displayName": "Windows MSVC Debug",
+      "description": "Use cl.exe via Visual Studio 2022",
+      "inherits": "base",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/msvc-debug"
+      }
+    },
+    {
+      "name": "msvc release",
+      "displayName": "Windows MSVC Release",
+      "description": "Use cl.exe via Visual Studio 2022",
+      "inherits": "base",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/msvc-release"
+      }
+    },
+
+    {
+      "name": "ninja debug",
+      "displayName": "Ninja Debug",
+      "description": "Use Ninja + GCC/Clang for Debug",
+      "inherits": "base",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/ninja-debug"
+      }
+    },
+    {
+      "name": "ninja release",
+      "displayName": "Ninja Release",
+      "description": "Use Ninja + GCC/Clang for Release",
+      "inherits": "base",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/ninja-release"
+      }
+    }
+  ]
+}
