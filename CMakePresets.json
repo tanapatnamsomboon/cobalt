@@ -16,7 +16,7 @@
     },
 
     {
-      "name": "msvc debug",
+      "name": "msvc-debug",
       "displayName": "Windows MSVC Debug",
       "description": "Use cl.exe via Visual Studio 2022",
       "inherits": "base",
@@ -33,7 +33,7 @@
       }
     },
     {
-      "name": "msvc release",
+      "name": "msvc-release",
       "displayName": "Windows MSVC Release",
       "description": "Use cl.exe via Visual Studio 2022",
       "inherits": "base",
@@ -51,7 +51,7 @@
     },
 
     {
-      "name": "ninja debug",
+      "name": "ninja-debug",
       "displayName": "Ninja Debug",
       "description": "Use Ninja + GCC/Clang for Debug",
       "inherits": "base",
@@ -62,7 +62,7 @@
       }
     },
     {
-      "name": "ninja release",
+      "name": "ninja-release",
       "displayName": "Ninja Release",
       "description": "Use Ninja + GCC/Clang for Release",
       "inherits": "base",

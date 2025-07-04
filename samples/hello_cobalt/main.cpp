@@ -1,7 +1,13 @@
-#include <cobalt/core.h>
+#include <cobalt/core/core.h>
+#include <cobalt/core/log.h>
+#include <iostream>
 
 int main()
 {
-    Cobalt::Init();
+    cobalt::log::init();
+    cobalt::init();
+
+    CB_LOG("Hello from cobalt!");
+
     return 0;
 }
