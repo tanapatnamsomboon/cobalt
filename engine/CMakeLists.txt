@@ -1,15 +1,18 @@
 add_library(cobalt_engine STATIC)
 
-target_precompile_headers(cobalt_engine PRIVATE include/cobalt.pch)
+target_precompile_headers(cobalt_engine PRIVATE include/pch.h)
 
 target_sources(cobalt_engine
         PRIVATE
-        src/core/core.cpp
             src/core/log.cpp
+            src/core/window.cpp
+            src/platform/windows/windows_window.cpp
         PUBLIC
-        include/cobalt/core/core.h
             ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/base.h
             ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/log.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/assert.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/window.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/platform/windows/windows_window.h
 )
 
 target_include_directories(cobalt_engine
@@ -17,15 +20,16 @@ target_include_directories(cobalt_engine
             ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_compile_definitions(cobalt_engine PUBLIC CB_DEBUG)
-elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
-    target_compile_definitions(cobalt_engine PUBLIC CB_RELEASE)
-elseif (CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
-    target_compile_definitions(cobalt_engine PUBLIC CB_RELEASE)
-elseif (CMAKE_BUILD_TYPE STREQUAL "MinSizeRel")
-    target_compile_definitions(cobalt_engine PUBLIC CB_DIST)
-endif ()
+target_compile_definitions(cobalt_engine
+        PRIVATE
+            UNICODE
+            CB_INTERNAL
+        PUBLIC
+            $<$<CONFIG:Debug>:CB_BUILD_DEBUG=1>
+            $<$<CONFIG:Release>:CB_BUILD_RELEASE=1>
+            $<$<CONFIG:RelWithDebInfo>:CB_BUILD_RELEASE=1>
+            $<$<CONFIG:MinSizeRel>:CB_BUILD_DIST=1>
+)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/thirdparty/spdlog
                  ${CMAKE_BINARY_DIR}/thirdparty/spdlog)

@@ -1,16 +1,16 @@
 #pragma once
 
-#include "cobalt/core/base.h"
-
 #include <memory>
 
 #define CB_EXPAND(x) x
 #define CB_STRINGIFY(x) #x
 #define CB_CONCAT(x, y) a##b
 
-#ifdef CB_DEBUG
+#include "cobalt/core/platform_detection.h"
+
+#ifdef CB_BUILD_DEBUG
     #if defined(CB_PLATFORM_WINDOWS)
-        #defined CB_DEBUGBREAK() __debugbreak()
+        #define CB_DEBUGBREAK() __debugbreak()
     #elif defined(CB_PLATFORM_LINUX)
         #include <signal.h>
         #define CB_DEBUGBREAK() raise(SIGTRAP)
@@ -23,3 +23,4 @@
 #endif
 
 #include "cobalt/core/log.h"
+#include "cobalt/core/assert.h"

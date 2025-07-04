@@ -1,13 +1,18 @@
-#include <cobalt/core/core.h>
 #include <cobalt/core/log.h>
-#include <iostream>
+#include "cobalt/core/window.h"
 
 int main()
 {
     cobalt::log::init();
-    cobalt::init();
 
-    CB_LOG("Hello from cobalt!");
+    CB_LOG_INFO("Starting HelloCobalt");
+
+    auto window = cobalt::window::create({"Hello Window", 800, 600});
+
+    while (true)
+    {
+        window->on_update();
+    }
 
     return 0;
 }

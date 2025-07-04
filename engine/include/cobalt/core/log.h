@@ -18,7 +18,7 @@ namespace cobalt
     };
 } // namespace cobalt
 
-#if defined(CB_RELEASE)
+#if defined(CB_BUILD_RELEASE)
     #define CB_CORE_TRACE(...)    void(0)
     #define CB_CORE_DEBUG(...)    void(0)
     #define CB_CORE_INFO(...)     ::cobalt::log::get_core_logger()->info(__VA_ARGS__)
@@ -34,22 +34,22 @@ namespace cobalt
     #define CB_CORE_CRITICAL(...) ::cobalt::log::get_core_logger()->critical(__VA_ARGS__)
 #endif
 
-#if defined(CB_RELEASE)
-    #define CB_TRACE(...)    void(0)
-    #define CB_DEBUG(...)    void(0)
-    #define CB_INFO(...)     ::cobalt::log::get_client_logger()->info(__VA_ARGS__)
-    #define CB_WARN(...)     ::cobalt::log::get_client_logger()->warn(__VA_ARGS__)
-    #define CB_ERROR(...)    ::cobalt::log::get_client_logger()->error(__VA_ARGS__)
-    #define CB_CRITICAL(...) ::cobalt::log::get_client_logger()->critical(__VA_ARGS__)
+#if defined(CB_BUILD_RELEASE)
+    #define CB_LOG_TRACE(...)    void(0)
+    #define CB_LOG_DEBUG(...)    void(0)
+    #define CB_LOG_INFO(...)     ::cobalt::log::get_client_logger()->info(__VA_ARGS__)
+    #define CB_LOG_WARN(...)     ::cobalt::log::get_client_logger()->warn(__VA_ARGS__)
+    #define CB_LOG_ERROR(...)    ::cobalt::log::get_client_logger()->error(__VA_ARGS__)
+    #define CB_LOG_CRITICAL(...) ::cobalt::log::get_client_logger()->critical(__VA_ARGS__)
 
     #define CB_LOG(...)      ::cobalt::log::get_client_logger()->info(__VA_ARGS__)
 #else
-    #define CB_TRACE(...)    ::cobalt::log::get_client_logger()->trace(__VA_ARGS__)
-    #define CB_DEBUG(...)    ::cobalt::log::get_client_logger()->debug(__VA_ARGS__)
-    #define CB_INFO(...)     ::cobalt::log::get_client_logger()->info(__VA_ARGS__)
-    #define CB_WARN(...)     ::cobalt::log::get_client_logger()->warn(__VA_ARGS__)
-    #define CB_ERROR(...)    ::cobalt::log::get_client_logger()->error(__VA_ARGS__)
-    #define CB_CRITICAL(...) ::cobalt::log::get_client_logger()->critical(__VA_ARGS__)
+    #define CB_LOG_TRACE(...)    ::cobalt::log::get_client_logger()->trace(__VA_ARGS__)
+    #define CB_LOG_DEBUG(...)    ::cobalt::log::get_client_logger()->debug(__VA_ARGS__)
+    #define CB_LOG_INFO(...)     ::cobalt::log::get_client_logger()->info(__VA_ARGS__)
+    #define CB_LOG_WARN(...)     ::cobalt::log::get_client_logger()->warn(__VA_ARGS__)
+    #define CB_LOG_ERROR(...)    ::cobalt::log::get_client_logger()->error(__VA_ARGS__)
+    #define CB_LOG_CRITICAL(...) ::cobalt::log::get_client_logger()->critical(__VA_ARGS__)
 
     #define CB_LOG(...)      ::cobalt::log::get_client_logger()->debug(__VA_ARGS__)
 #endif

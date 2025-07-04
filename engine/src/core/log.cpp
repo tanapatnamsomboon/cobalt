@@ -1,4 +1,4 @@
-#include "cobalt.pch"
+#include "pch.h"
 
 #include "cobalt/core/log.h"
 #include <spdlog/sinks/stdout_color_sinks.h>
