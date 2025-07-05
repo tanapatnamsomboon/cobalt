@@ -8,6 +8,7 @@ namespace cobalt
     {
         CB_LOG_INFO("Create Application");
         m_window = window::create({"Cobalt Application", 1280, 720});
+        m_event_callback = [this](event& e) { on_event(e); };
     }
 
     application::~application()
@@ -23,5 +24,18 @@ namespace cobalt
         }
     }
 
+    void application::on_event(event &e)
+    {
+        event_dispatcher dispatcher(e);
+        dispatcher.dispatch<window_close_event>([this](window_close_event& ev)
+        {
+           return on_window_close(ev);
+        });
+    }
 
+    bool application::on_window_close(window_close_event &e)
+    {
+        m_running = false;
+        return true;
+    }
 }

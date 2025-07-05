@@ -7,14 +7,23 @@ target_sources(cobalt_engine
             src/core/log.cpp
             src/core/window.cpp
             src/core/application.cpp
+            src/core/event_dispatcher.cpp
+
             src/platform/windows/windows_window.cpp
         PUBLIC
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/base.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/log.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/assert.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/window.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/application.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/platform/windows/windows_window.h
+            include/cobalt/cobalt.h
+            include/cobalt/core/base.h
+            include/cobalt/core/assert.h
+            include/cobalt/core/event.h
+            include/cobalt/core/log.h
+            include/cobalt/core/window.h
+            include/cobalt/core/application.h
+            include/cobalt/core/event_dispatcher.h
+
+            include/cobalt/platform/windows/windows_window.h
+
+            include/cobalt/events/event_defs.h
+            include/cobalt/events/window_close_event.h
 )
 
 target_include_directories(cobalt_engine
