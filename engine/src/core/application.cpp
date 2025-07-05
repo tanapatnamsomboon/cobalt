@@ -8,7 +8,7 @@ namespace cobalt
     {
         CB_LOG_INFO("Create Application");
         m_window = window::create({"Cobalt Application", 1280, 720});
-        m_event_callback = [this](event& e) { on_event(e); };
+        m_window->set_event_callback([this](event& e){ on_event(e); });
     }
 
     application::~application()

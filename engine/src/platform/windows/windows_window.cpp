@@ -2,17 +2,25 @@
 
 #include "cobalt/platform/windows/windows_window.h"
 
+#include "cobalt/events/window_close_event.h"
+
 namespace cobalt
 {
     static LRESULT CALLBACK window_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
     {
+        windows_window* window = reinterpret_cast<windows_window*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
         switch (msg)
         {
-            case WM_CLOSE: PostQuitMessage(0);
+            case WM_CLOSE:
+            {
+                window_close_event event;
+                if (window && window->m_event_callback)
+                    window->m_event_callback(event);
                 return 0;
-            default:
-                return DefWindowProc(hwnd, msg, wparam, lparam);
+            }
         }
+
+        return DefWindowProc(hwnd, msg, wparam, lparam);
     }
 
     windows_window::windows_window(const window_props& props)
@@ -35,6 +43,12 @@ namespace cobalt
         }
     }
 
+    void windows_window::set_event_callback(const event_callback_fn &callback)
+    {
+        m_event_callback = callback;
+    }
+
+
     void windows_window::init(const window_props& props)
     {
         m_data.title = props.title;
@@ -54,6 +68,8 @@ namespace cobalt
             CW_USEDEFAULT, CW_USEDEFAULT, props.width, props.height,
             nullptr, nullptr, GetModuleHandle(nullptr), nullptr
         );
+
+        SetWindowLongPtr(m_handle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
         if (m_handle == nullptr)
         {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "event.h"
 #include "cobalt/core/base.h"
 
 namespace cobalt
@@ -26,6 +27,8 @@ namespace cobalt
         virtual void on_update() = 0;
         virtual uint32_t get_width() const = 0;
         virtual uint32_t get_height() const = 0;
+
+        virtual void set_event_callback(const event_callback_fn& callback) = 0;
 
         static std::unique_ptr<window> create(const window_props& props);
     };
