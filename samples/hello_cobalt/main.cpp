@@ -1,18 +1,25 @@
-#include <cobalt/core/log.h>
-#include "cobalt/core/window.h"
+#include <cobalt/cobalt.h>
+
+class hello_cobalt_app : public cobalt::application
+{
+public:
+    hello_cobalt_app() = default;
+    ~hello_cobalt_app() override = default;
+};
+
+cobalt::application *cobalt::create_application()
+{
+    return new hello_cobalt_app();
+}
+
 
 int main()
 {
     cobalt::log::init();
 
-    CB_LOG_INFO("Starting HelloCobalt");
-
-    auto window = cobalt::window::create({"Hello Window", 800, 600});
-
-    while (true)
-    {
-        window->on_update();
-    }
+    auto app = cobalt::create_application();
+    app->run();
+    delete app;
 
     return 0;
 }

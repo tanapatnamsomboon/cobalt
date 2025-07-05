@@ -6,12 +6,14 @@ target_sources(cobalt_engine
         PRIVATE
             src/core/log.cpp
             src/core/window.cpp
+            src/core/application.cpp
             src/platform/windows/windows_window.cpp
         PUBLIC
             ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/base.h
             ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/log.h
             ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/assert.h
             ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/window.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/core/application.h
             ${CMAKE_CURRENT_SOURCE_DIR}/include/cobalt/platform/windows/windows_window.h
 )
 
