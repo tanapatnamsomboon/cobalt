@@ -6,7 +6,7 @@ namespace cobalt
     {
         none = 0,
         window_close, window_resize,
-        key_pressed, ket_released,
+        key_pressed, key_released,
         mouse_button_pressed, mouse_button_released, mouse_moved
     };
 
@@ -28,4 +28,6 @@ namespace cobalt
 #define CB_EVENT_CLASS_CATEGORY(category) \
     virtual int         get_category_flags() const override { return category; }
 
+#define CB_BIND_EVENT_FN(fn) \
+    std::bind(&std::remove_reference<decltype(*this)>::type::fn, this, std::placeholders::_1)
 }

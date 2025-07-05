@@ -27,14 +27,13 @@ namespace cobalt
     void application::on_event(event &e)
     {
         event_dispatcher dispatcher(e);
-        dispatcher.dispatch<window_close_event>([this](window_close_event &ev)
-        {
-            return on_window_close(ev);
-        });
-        dispatcher.dispatch<window_resize_event>([this](window_resize_event &ev)
-        {
-            return on_window_resize(ev);
-        });
+        dispatcher.dispatch<window_close_event>(CB_BIND_EVENT_FN(on_window_close));
+        dispatcher.dispatch<window_resize_event>(CB_BIND_EVENT_FN(on_window_resize));
+        dispatcher.dispatch<key_pressed_event>(CB_BIND_EVENT_FN(on_key_pressed));
+        dispatcher.dispatch<key_released_event>(CB_BIND_EVENT_FN(on_key_released));
+        dispatcher.dispatch<mouse_moved_event>(CB_BIND_EVENT_FN(on_mouse_moved));
+        dispatcher.dispatch<mouse_button_pressed_event>(CB_BIND_EVENT_FN(on_mouse_button_pressed));
+        dispatcher.dispatch<mouse_button_release_event>(CB_BIND_EVENT_FN(on_mouse_button_released));
     }
 
     bool application::on_window_close(window_close_event &e)
@@ -46,6 +45,36 @@ namespace cobalt
     bool application::on_window_resize(window_resize_event &e)
     {
         CB_LOG_INFO("Window resized to {}x{}", e.get_width(), e.get_height());
+        return true;
+    }
+
+    bool application::on_key_pressed(key_pressed_event &e)
+    {
+        CB_LOG_INFO("KeyPressed: {}", e.get_keycode());
+        return true;
+    }
+
+    bool application::on_key_released(key_released_event &e)
+    {
+        CB_LOG_INFO("KeyReleased: {}", e.get_keycode());
+        return true;
+    }
+
+    bool application::on_mouse_moved(mouse_moved_event &e)
+    {
+        CB_LOG_INFO("MouseMoved: {}, {}", e.get_x(), e.get_y());
+        return true;
+    }
+
+    bool application::on_mouse_button_pressed(mouse_button_pressed_event &e)
+    {
+        CB_LOG_INFO("MouseButtonPressed: {}", e.get_mouse_button());
+        return true;
+    }
+
+    bool application::on_mouse_button_released(mouse_button_release_event &e)
+    {
+        CB_LOG_INFO("MouseButtonReleased: {}", e.get_mouse_button());
         return true;
     }
 }

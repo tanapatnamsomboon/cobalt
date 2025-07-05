@@ -4,7 +4,7 @@
 
 namespace cobalt
 {
-    class window_resize_event : public event
+    class window_resize_event final : public event
     {
     public:
         window_resize_event(uint32_t width, uint32_t height)

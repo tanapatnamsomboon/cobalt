@@ -4,7 +4,7 @@
 
 namespace cobalt
 {
-    class window_close_event : public event
+    class window_close_event final : public event
     {
     public:
         window_close_event() = default;
