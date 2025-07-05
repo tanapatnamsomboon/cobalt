@@ -3,6 +3,7 @@
 #include "cobalt/platform/windows/windows_window.h"
 
 #include "cobalt/events/window_close_event.h"
+#include "cobalt/events/window_resize_event.h"
 
 namespace cobalt
 {
@@ -11,6 +12,15 @@ namespace cobalt
         windows_window* window = reinterpret_cast<windows_window*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
         switch (msg)
         {
+            case WM_SIZE:
+            {
+                uint32_t width = LOWORD(lparam);
+                uint32_t height = HIWORD(lparam);
+                window_resize_event event(width, height);
+                if (window && window->m_event_callback)
+                    window->m_event_callback(event);
+                return 0;
+            }
             case WM_CLOSE:
             {
                 window_close_event event;

@@ -21,7 +21,7 @@ namespace cobalt
             return get_category_flags() & category;
         }
 
-        std::string to_string() const
+        virtual std::string to_string() const
         {
             return get_name();
         }
@@ -50,5 +50,5 @@ namespace cobalt
         event &m_event;
     };
 
-    using event_callback_fn = std::function<void(event&)>;
+    using event_callback_fn = std::function<void(event &)>;
 }

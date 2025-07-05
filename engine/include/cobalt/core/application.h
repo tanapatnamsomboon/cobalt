@@ -3,6 +3,7 @@
 #include "cobalt/core/base.h"
 #include "cobalt/core/window.h"
 #include "cobalt/events/window_close_event.h"
+#include "cobalt/events/window_resize_event.h"
 
 namespace cobalt
 {
@@ -19,6 +20,7 @@ namespace cobalt
 
     protected:
         virtual bool on_window_close(window_close_event& e);
+        virtual bool on_window_resize(window_resize_event& e);
 
         std::unique_ptr<window> m_window;
         bool m_running = true;

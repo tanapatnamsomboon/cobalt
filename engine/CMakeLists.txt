@@ -24,6 +24,7 @@ target_sources(cobalt_engine
 
             include/cobalt/events/event_defs.h
             include/cobalt/events/window_close_event.h
+            include/cobalt/events/window_resize_event.h
 )
 
 target_include_directories(cobalt_engine

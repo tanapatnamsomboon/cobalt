@@ -8,7 +8,7 @@ namespace cobalt
     {
         CB_LOG_INFO("Create Application");
         m_window = window::create({"Cobalt Application", 1280, 720});
-        m_window->set_event_callback([this](event& e){ on_event(e); });
+        m_window->set_event_callback([this](event &e) { on_event(e); });
     }
 
     application::~application()
@@ -27,15 +27,25 @@ namespace cobalt
     void application::on_event(event &e)
     {
         event_dispatcher dispatcher(e);
-        dispatcher.dispatch<window_close_event>([this](window_close_event& ev)
+        dispatcher.dispatch<window_close_event>([this](window_close_event &ev)
         {
-           return on_window_close(ev);
+            return on_window_close(ev);
+        });
+        dispatcher.dispatch<window_resize_event>([this](window_resize_event &ev)
+        {
+            return on_window_resize(ev);
         });
     }
 
     bool application::on_window_close(window_close_event &e)
     {
         m_running = false;
+        return true;
+    }
+
+    bool application::on_window_resize(window_resize_event &e)
+    {
+        CB_LOG_INFO("Window resized to {}x{}", e.get_width(), e.get_height());
         return true;
     }
 }
