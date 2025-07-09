@@ -1,0 +1,76 @@
+{
+  "version": 9,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 31,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "description": "Base configuration",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/install/${presetName}"
+    },
+    {
+      "name": "msvc-base",
+      "hidden": true,
+      "description": "Base configuration for MSVC generator",
+      "generator": "Visual Studio 17 2022"
+    },
+    {
+      "name": "ninja-base",
+      "hidden": true,
+      "description": "Base configuration for Ninja generator",
+      "generator": "Ninja"
+    },
+    {
+      "name": "debug-base",
+      "hidden": true,
+      "description": "Base debug configuration",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release-base",
+      "hidden": true,
+      "description": "Base release configuration",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "msvc",
+      "displayName": "MSVC",
+      "description": "Configure for MSVC (Visual Studio) build",
+      "inherits": [
+        "base",
+        "debug-base",
+        "msvc-base"
+      ]
+    },
+    {
+      "name": "ninja-debug",
+      "displayName": "Ninja Debug",
+      "description": "Configure for Ninja (GCC/Clang) Debug build",
+      "inherits": [
+        "base",
+        "debug-base",
+        "ninja-base"
+      ]
+    },
+    {
+      "name": "ninja-release",
+      "displayName": "Ninja Release",
+      "description": "Configure for Ninja (GCC/Clang) Release build",
+      "inherits": [
+        "base",
+        "release-base",
+        "ninja-base"
+      ]
+    }
+  ]
+}
+
