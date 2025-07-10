@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Cobalt/Core/Base.h"
 #include "Cobalt/Core/Window.h"
 
 namespace Cobalt
@@ -13,7 +14,7 @@ namespace Cobalt
         void Run();
 
     private:
-        std::unique_ptr<Window> m_Window;
+        Scope<Window> m_Window;
     };
 
     Application* CreateApplication();

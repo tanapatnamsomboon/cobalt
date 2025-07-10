@@ -13,8 +13,8 @@ namespace Cobalt
 
         void OnUpdate() override;
 
-        unsigned int GetWidth() const override { return m_Data.Width; }
-        unsigned int GetHeight() const override { return m_Data.Height; }
+        u32 GetWidth() const override { return m_Data.Width; }
+        u32 GetHeight() const override { return m_Data.Height; }
 
     private:
         void Init(const WindowProps &props);
@@ -27,8 +27,8 @@ namespace Cobalt
         struct WindowData
         {
             std::string Title;
-            unsigned int Width;
-            unsigned int Height;
+            u32 Width;
+            u32 Height;
             bool Running = true;
         };
 
