@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Cobalt/Core/Window.h"
+
 namespace Cobalt
 {
     class Application
@@ -9,6 +11,9 @@ namespace Cobalt
         virtual ~Application();
 
         void Run();
+
+    private:
+        std::unique_ptr<Window> m_Window;
     };
 
     Application* CreateApplication();
