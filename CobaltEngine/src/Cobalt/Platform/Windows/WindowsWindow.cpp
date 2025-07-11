@@ -1,8 +1,12 @@
 #include  "WindowsWindow.h"
 
+#include "Cobalt/Events/ApplicationEvent.h"
+
 namespace Cobalt
 {
-    static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    static WindowsWindow *s_Instance = nullptr;
+
+    LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 
     WindowsWindow::WindowsWindow(const WindowProps &props)
     {
@@ -29,8 +33,15 @@ namespace Cobalt
         }
     }
 
+    void WindowsWindow::SetEventCallback(const EventCallbackFn &callback)
+    {
+        m_Data.EventCallback = callback;
+    }
+
     void WindowsWindow::Init(const WindowProps &props)
     {
+        s_Instance = this;
+
         m_Data.Title = props.Title;
         m_Data.Width = props.Width;
         m_Data.Height = props.Height;
@@ -61,17 +72,25 @@ namespace Cobalt
         DestroyWindow(m_WindowHandle);
     }
 
-
-    static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+    LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
-        switch (uMsg)
+        if (s_Instance)
         {
-            case WM_DESTROY:
-                PostQuitMessage(0);
-                return 0;
-
-            default:
-                return DefWindowProc(hWnd, uMsg, wParam, lParam);
+            switch (uMsg)
+            {
+                case WM_CLOSE:
+                {
+                    WindowCloseEvent event;
+                    s_Instance->m_Data.EventCallback(event);
+                    return 0;
+                }
+                default:
+                {
+                    return DefWindowProc(hWnd, uMsg, wParam, lParam);
+                }
+            }
         }
+
+        return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
 }

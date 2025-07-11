@@ -7,12 +7,12 @@ public:
     CobaltApp()
         : Cobalt::Application()
     {
-        COBALT_INFO(L"Cobalt App created");
+        CB_INFO("Cobalt App created");
     }
 
-    ~CobaltApp()
+    ~CobaltApp() override
     {
-        COBALT_INFO(L"Cobalt App destroyed");
+        CB_INFO("Cobalt App destroyed");
     }
 };
 
@@ -22,7 +22,7 @@ Cobalt::Application *Cobalt::CreateApplication()
 }
 
 
-int main()
+int main(int argc, char** argv)
 {
     Cobalt::Log::Init();
 

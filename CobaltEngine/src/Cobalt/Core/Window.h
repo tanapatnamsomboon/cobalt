@@ -2,6 +2,7 @@
 
 #include "Cobalt/Core/Base.h"
 #include <sstream>
+#include <functional>
 
 namespace Cobalt
 {
@@ -19,6 +20,10 @@ namespace Cobalt
         }
     };
 
+    class Event;
+
+    using EventCallbackFn = std::function<void(Event&)>;
+
     class Window
     {
     public:
@@ -28,6 +33,10 @@ namespace Cobalt
 
         virtual unsigned int GetWidth() const = 0;
         virtual unsigned int GetHeight() const = 0;
+
+        virtual void* GetNativeWindow() const = 0;
+
+        virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 
         static Scope<Window> Create(const WindowProps &props = WindowProps());
     };

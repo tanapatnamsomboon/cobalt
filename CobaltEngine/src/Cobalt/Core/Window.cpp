@@ -8,5 +8,4 @@ namespace Cobalt
     {
         return CreateScope<WindowsWindow>(props);
     }
-
 }

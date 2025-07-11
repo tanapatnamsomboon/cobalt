@@ -16,6 +16,10 @@ namespace Cobalt
         u32 GetWidth() const override { return m_Data.Width; }
         u32 GetHeight() const override { return m_Data.Height; }
 
+        void* GetNativeWindow() const override { return m_WindowHandle; }
+
+        void SetEventCallback(const EventCallbackFn &callback) override;
+
     private:
         void Init(const WindowProps &props);
         void Shutdown();
@@ -30,8 +34,11 @@ namespace Cobalt
             u32 Width;
             u32 Height;
             bool Running = true;
+            EventCallbackFn EventCallback;
         };
 
         WindowData m_Data;
+
+        friend LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
     };
 }
