@@ -1,5 +1,5 @@
 #include <Cobalt/Core/Application.h>
-#include <print>
+#include <Cobalt/Core/Log.h>
 
 class CobaltApp final : public Cobalt::Application
 {
@@ -7,12 +7,12 @@ public:
     CobaltApp()
         : Cobalt::Application()
     {
-        std::println("Cobalt App created");
+        COBALT_INFO(L"Cobalt App created");
     }
 
-    ~CobaltApp() override
+    ~CobaltApp()
     {
-        std::println("Cobalt App destroyed");
+        COBALT_INFO(L"Cobalt App destroyed");
     }
 };
 
@@ -24,6 +24,8 @@ Cobalt::Application *Cobalt::CreateApplication()
 
 int main()
 {
+    Cobalt::Log::Init();
+
     const auto app = Cobalt::CreateApplication();
     app->Run();
     delete app;

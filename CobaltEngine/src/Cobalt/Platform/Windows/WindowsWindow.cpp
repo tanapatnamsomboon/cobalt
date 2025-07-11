@@ -29,7 +29,7 @@ namespace Cobalt
         }
     }
 
-    void WindowsWindow::Init(const WindowProps& props)
+    void WindowsWindow::Init(const WindowProps &props)
     {
         m_Data.Title = props.Title;
         m_Data.Width = props.Width;
@@ -64,12 +64,14 @@ namespace Cobalt
 
     static LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
-        if (uMsg == WM_CLOSE)
+        switch (uMsg)
         {
-            PostQuitMessage(0);
-            return 0;
-        }
+            case WM_DESTROY:
+                PostQuitMessage(0);
+                return 0;
 
-        return DefWindowProc(hWnd, uMsg, wParam, lParam);
+            default:
+                return DefWindowProc(hWnd, uMsg, wParam, lParam);
+        }
     }
 }
