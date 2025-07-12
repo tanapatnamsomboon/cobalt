@@ -4,9 +4,33 @@
 
 namespace Cobalt
 {
-    static WindowsWindow *s_Instance = nullptr;
+    LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+    {
+        if (uMsg == WM_NCCREATE)
+        {
+            const auto create = reinterpret_cast<LPCREATESTRUCT>(lParam);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(create->lpCreateParams));
+        }
 
-    LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
+        if (const auto* window = reinterpret_cast<WindowsWindow*>(GetWindowLongPtr(hWnd, GWLP_USERDATA)))
+        {
+            switch (uMsg)
+            {
+                case WM_CLOSE:
+                {
+                    WindowCloseEvent event;
+                    window->m_Data.EventCallback(event);
+                    return 0;
+                }
+                default:
+                {
+                    return DefWindowProc(hWnd, uMsg, wParam, lParam);
+                }
+            }
+        }
+
+        return DefWindowProc(hWnd, uMsg, wParam, lParam);
+    }
 
     WindowsWindow::WindowsWindow(const WindowProps &props)
     {
@@ -40,8 +64,6 @@ namespace Cobalt
 
     void WindowsWindow::Init(const WindowProps &props)
     {
-        s_Instance = this;
-
         m_Data.Title = props.Title;
         m_Data.Width = props.Width;
         m_Data.Height = props.Height;
@@ -61,7 +83,7 @@ namespace Cobalt
             CW_USEDEFAULT, CW_USEDEFAULT,
             static_cast<int>(m_Data.Width), static_cast<int>(m_Data.Height),
             nullptr, nullptr,
-            m_Instance, nullptr
+            m_Instance, this
         );
 
         ShowWindow(m_WindowHandle, SW_SHOW);
@@ -70,27 +92,5 @@ namespace Cobalt
     void WindowsWindow::Shutdown()
     {
         DestroyWindow(m_WindowHandle);
-    }
-
-    LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-    {
-        if (s_Instance)
-        {
-            switch (uMsg)
-            {
-                case WM_CLOSE:
-                {
-                    WindowCloseEvent event;
-                    s_Instance->m_Data.EventCallback(event);
-                    return 0;
-                }
-                default:
-                {
-                    return DefWindowProc(hWnd, uMsg, wParam, lParam);
-                }
-            }
-        }
-
-        return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
 }
