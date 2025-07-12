@@ -4,14 +4,21 @@
 
 namespace Cobalt
 {
+    Application* Application::s_Instance = nullptr;
+
     Application::Application()
     {
+        assert(!s_Instance, "Applicaiton already exists!");
+        s_Instance = this;
+
         // TODO: Init subsystems
         m_Window = Window::Create();
         m_Window->SetEventCallback([this](Event& e)
         {
             this->OnEvent(e);
         });
+
+        m_Input = Input::Create();
     }
 
     Application::~Application() = default;
